@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import loginSignup from '../assets/login-signup.avif';
+import loginSignup from '../../assets/login-signup.avif';
 
 const SignupPage = () => {
     const [formData, setFormData] = useState({

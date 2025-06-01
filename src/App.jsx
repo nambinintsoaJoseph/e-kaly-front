@@ -5,8 +5,8 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Accueil from './pages/Accueil';
 import Login from './pages/Login';
-import SignupPage from './pages/SignupPage';
-import RepasDisponible from './pages/agent/RepasDisponible';
+import Signup from './pages/Signup';
+import RepasDisponible from './pages/RepasDisponible';
 
 function App() {
     return (
@@ -15,8 +15,9 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Accueil />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<SignupPage />} />
+                    <Route path="/signup" element={<Signup />} />
 
+                    {/* Agents */}
                     <Route path="/agent/repas" element={<RepasDisponible />} />
                 </Routes>
             </Router>

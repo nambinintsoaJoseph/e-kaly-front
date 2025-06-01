@@ -1,0 +1,28 @@
+.dashboard-content {
+    margin-left: 310px;
+}
+
+.container-repas {
+    width: 100%;
+    margin: 10px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 400px 400px 400px;
+    justify-content: space-evenly;
+}
+
+.container > * {
+    flex: 0 50%;
+}
+
+@media screen and (max-width: 1690px) {
+    .container-repas {
+        grid-template-columns: 400px 400px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .container-repas {
+        grid-template-columns: 400px;
+    }
+}

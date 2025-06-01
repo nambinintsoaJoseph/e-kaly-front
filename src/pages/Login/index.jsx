@@ -6,7 +6,7 @@ import {
     faEnvelope,
     faLock,
 } from '@fortawesome/free-solid-svg-icons';
-import loginSignup from '../assets/login-signup.avif';
+import loginSignup from '../../assets/login-signup.avif';
 import { Link } from 'react-router-dom';
 
 function Login() {
