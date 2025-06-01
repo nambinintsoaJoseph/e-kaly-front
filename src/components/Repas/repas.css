@@ -1,0 +1,20 @@
+.card {
+    width: 400px;
+}
+
+.card-img-top {
+    width: 398px;
+    height: 398px;
+}
+
+.ajouter-commande,
+.ajouter-commande:hover,
+.ajouter-commande:active {
+    background-color: #ff7e29;
+    border: 2px solid #ff7e29;
+}
+
+.prix {
+    font-weight: bold;
+    color: #ff7e29;
+}

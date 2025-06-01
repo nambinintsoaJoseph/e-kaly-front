@@ -1,9 +1,8 @@
-import Cta from "../components/Cta";
-import PourquoiNousChoisir from "../components/PourquoiNousChoisir";
-import PretACommander from "../components/PretACommander";
+import Cta from '../components/Cta';
+import PourquoiNousChoisir from '../components/PourquoiNousChoisir';
+import PretACommander from '../components/PretACommander';
 
-function Accueil() 
-{
+function Accueil() {
     return (
         <div>
             <Cta />
@@ -13,4 +12,4 @@ function Accueil()
     );
 }
 
-export default Accueil; 
+export default Accueil;

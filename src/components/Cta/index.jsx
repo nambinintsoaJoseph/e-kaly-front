@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './css/cta.css';
+import './cta.css';
 
 function Cta() {
     return (

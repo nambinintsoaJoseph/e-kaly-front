@@ -1,0 +1,25 @@
+.search-bar-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-bar-container input {
+    border: 1px solid #ced4da;
+    border-radius: 25px 0 0 25px;
+    padding: 10px 20px;
+    box-shadow: none;
+}
+
+.search-bar-container button {
+    background-color: '#ff7e29';
+    color: white;
+    border: none;
+    border-radius: 0 25px 25px 0;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#button-search {
+    background-color: #ff7e29;
+}
