@@ -1,0 +1,100 @@
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff4e6;
+    font-family: Arial, sans-serif;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+        url('../../assets/cta1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.signup-box {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.signup-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.signup-header h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.signup-header p {
+    color: #666;
+}
+
+.signup-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-control,
+.form-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.form-control:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #ff7e29;
+    box-shadow: 0 0 0 2px rgba(255, 126, 41, 0.2);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff7e29;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #ff7e29; /* Même couleur au survol */
+}
+
+/* Style spécifique pour le select */
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+}
+
+.e-kaly {
+    color: #ff7e29 !important;
+}
