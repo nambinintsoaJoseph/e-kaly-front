@@ -11,7 +11,13 @@ function Repas({ repas }) {
                     </div>
 
                     <div>
-                        <h4 className="card-title prix">{repas.prix} Ar</h4>
+                        <h4 className="card-title prix">
+                            {/* Séparateur des milliers (espace) */}
+                            {Number(repas.prix)
+                                .toLocaleString('fr-FR')
+                                .replace(/\s/g, ' ')}{' '}
+                            Ar
+                        </h4>
                     </div>
                 </div>
 
