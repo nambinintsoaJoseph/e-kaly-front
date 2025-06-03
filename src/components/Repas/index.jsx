@@ -3,7 +3,11 @@ import './repas.css';
 function Repas({ repas }) {
     return (
         <div className="card">
-            <img className="card-img-top" src={repas.photo} alt="Card image" />
+            <img
+                className="card-img-top"
+                src={`http://localhost/e-kaly${repas.photo}`}
+                alt="Card image"
+            />
             <div className="card-body">
                 <div className="d-flex justify-content-around">
                     <div>

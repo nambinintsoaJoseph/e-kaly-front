@@ -1,14 +1,18 @@
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import Repas from '../../components/Repas';
-import './repasdisponible.css';
-
-/* Images de test */
-import gnocchis from '../../assets/gnocchis.jpg';
-import pateCarbonara from '../../assets/pate-carbonara.webp';
 import BarreRecherche from '../../components/BarreRecherche';
+import './repasdisponible.css';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { useState, useEffect } from 'react';
 
 function RepasDisponible() {
+    const navigate = useNavigate();
+    const [listeRepas, setListeRepas] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const menu = [
         {
             title: 'Repas disponibles',
@@ -24,33 +28,58 @@ function RepasDisponible() {
         },
     ];
 
-    /* Données de test */
-    const listeRepas = [
-        {
-            id: 1,
-            nom: 'Gnocchis',
-            description:
-                "Les gnocchi constituent une préparation culinaire extrêmement courante dans de nombreux pays du monde et présentent des différences notables d'un type à l'autre.",
-            photo: gnocchis,
-            prix: 25000,
-        },
-        {
-            id: 2,
-            nom: 'Pate Carbonara',
-            description:
-                "La recette est considérée comme étant originaire de Rome Le plat fait partie d'une famille de plats composés de pâtes au porc séché, au fromage et au poivre.",
-            photo: pateCarbonara,
-            prix: 35000,
-        },
-        {
-            id: 3,
-            nom: 'Pate Carbonara',
-            description:
-                "La recette est considérée comme étant originaire de Rome Le plat fait partie d'une famille de plats composés de pâtes au porc séché, au fromage et au poivre.",
-            photo: pateCarbonara,
-            prix: 35000,
-        },
-    ];
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        // Vérification du token
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const role = jwtDecode(token)['role'];
+            if (role !== 'agent') {
+                navigate('/login');
+                return;
+            }
+        } catch (error) {
+            console.error('Erreur de décodage du token:', error);
+            navigate('/login');
+            return;
+        }
+
+        getRepas();
+    }, [navigate]);
+
+    const getRepas = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(
+                'http://localhost/e-kaly/api/routes/repas/agent.php',
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des repas');
+            }
+
+            const data = await response.json();
+            console.log(data);
+            setListeRepas(data.repas || []);
+        } catch (error) {
+            console.error('Erreur:', error);
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className="d-flex flex-row">
@@ -63,9 +92,23 @@ function RepasDisponible() {
                 <BarreRecherche />
 
                 <div className="container-repas">
-                    {listeRepas.map((rp, id) => (
-                        <Repas repas={rp} key={id} />
-                    ))}
+                    {isLoading ? (
+                        <div
+                            className="d-flex justify-content-center"
+                            style={{ height: '120px' }}
+                        >
+                            <div class="spinner-border text-success"></div>
+                            <div className="ms-2">Chargement en cours...</div>
+                        </div>
+                    ) : error ? (
+                        <p className="error-message">Erreur: {error}</p>
+                    ) : listeRepas.length > 0 ? (
+                        listeRepas.map((rp) => (
+                            <Repas repas={rp} key={rp.id_repas} />
+                        ))
+                    ) : (
+                        <p>Aucun repas disponible</p>
+                    )}
                 </div>
             </div>
         </div>
