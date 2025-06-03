@@ -7,6 +7,7 @@ import Accueil from './pages/Accueil';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import RepasDisponible from './pages/RepasDisponible';
+import CommandeRepasAgent from './pages/CommandeRepasAgent';
 
 function App() {
     return (
@@ -19,6 +20,10 @@ function App() {
 
                     {/* Agents */}
                     <Route path="/agent/repas" element={<RepasDisponible />} />
+                    <Route
+                        path="/agent/commande"
+                        element={<CommandeRepasAgent />}
+                    />
                 </Routes>
             </Router>
         </>

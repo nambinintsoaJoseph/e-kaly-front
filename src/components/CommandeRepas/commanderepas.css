@@ -1,0 +1,65 @@
+.container-commande-repas {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.header-commande-repas {
+    height: 80px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #ff7e29;
+    color: white;
+    padding: 12px;
+    overflow-y: hidden;
+}
+
+.body-commande-repas {
+    padding: 35px;
+    border: 1px solid #ff7e29;
+}
+
+.body-commande-repas > h5 {
+    border-left: 5px solid #ff7e29;
+    padding: 5px;
+    margin-top: -10px;
+}
+
+.commande-repas {
+    background-color: #fff7ed;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.img-repas {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    margin: 15px;
+}
+
+.description-repas {
+    margin-top: 25px;
+}
+
+.description-repas > p {
+    color: #6e5d63;
+}
+
+.description-prix {
+    margin: 20px;
+}
+
+.footer-commande-repas {
+    padding: 20px 25px 10px 25px;
+    border-radius: 0px 0px 10px 10px;
+    background-color: #dce8ee;
+}
+
+@media screen and (max-width: 992px) {
+    .img-repas {
+        display: none;
+    }
+
+    .description-repas {
+        margin-left: 15px;
+    }
+}
