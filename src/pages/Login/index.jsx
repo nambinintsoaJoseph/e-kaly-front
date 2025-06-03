@@ -1,10 +1,63 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import './login.css';
 
 function Login() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const login = () => {
+        setIsLoading(true);
+        setError(''); // pour réinitialiser l'erreur à chaque tentative
+
+        fetch('http://localhost/e-kaly/api/routes/utilisateur/login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                mot_passe: password,
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error('!response.ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // console.log('API Response : ', data);
+                localStorage.setItem('token', data.token);
+
+                const role = jwtDecode(data.token)['role'];
+                if (role === 'agent') {
+                    navigate('/agent/repas');
+                } else {
+                    console.log('Gérant authentifié');
+                }
+            })
+            .catch((error) => {
+                console.error('Erreur : ', error);
+                setError(
+                    `Erreur d'authentification, veuillez vérifier vos informations.`
+                );
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        console.log(`email ${email} - password ${password}`);
+        login();
+    };
 
     return (
         <div className="login-container">
@@ -14,7 +67,17 @@ function Login() {
                     <p className="text-center">Commandez vos plats préférés.</p>
                 </div>
 
-                <form className="login-form">
+                {error && (
+                    <div
+                        className="alert alert-danger text-center mt-3"
+                        role="alert"
+                    >
+                        <i className="fa fa-triangle-exclamation text-danger me-2"></i>{' '}
+                        {error}
+                    </div>
+                )}
+
+                <form className="login-form" onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label className="form-label">
                             <i className="fa fa-envelope"></i> Email
@@ -41,10 +104,17 @@ function Login() {
                         />
                     </div>
 
-                    <button type="button" className="btn login-btn">
-                        <i className="fa fa-right-to-bracket"></i>
-                        <span className="ms-2">Se connecter</span>
-                    </button>
+                    {isLoading ? (
+                        <button class="btn login-btn text-light">
+                            <span class="spinner-border spinner-border-sm"></span>{' '}
+                            En cours de vérification...
+                        </button>
+                    ) : (
+                        <button type="submit" className="btn login-btn">
+                            <i className="fa fa-right-to-bracket"></i>
+                            <span className="ms-2">Se connecter</span>
+                        </button>
+                    )}
 
                     <p className="text-center mt-3">
                         Vous n'avez pas un compte ?
