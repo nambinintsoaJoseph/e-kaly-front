@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './signup.css';
+import { Link } from 'react-router-dom';
 
 const SignupPage = () => {
     const [formData, setFormData] = useState({
@@ -9,6 +10,11 @@ const SignupPage = () => {
         mot_passe: '',
         role: 'agent',
     });
+    const [status, setStatus] = useState({
+        success: false,
+        message: '',
+    });
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,9 +24,47 @@ const SignupPage = () => {
         }));
     };
 
+    const signup = () => {
+        setIsLoading(true);
+        fetch('http://localhost/e-kaly/api/routes/utilisateur/creer.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error('Erreur réseau');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('API Response : ', data);
+                setStatus({
+                    success: data.success,
+                    message: data.message,
+                });
+
+                if (data.success) {
+                    setFormData({
+                        nom: '',
+                        prenom: '',
+                        email: '',
+                        mot_passe: '',
+                        role: 'agent',
+                    });
+                }
+            })
+            .catch((error) => console.error('Erreur :', error))
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Données soumises:', formData);
+        signup();
     };
 
     return (
@@ -112,12 +156,41 @@ const SignupPage = () => {
                     <div className="form-group">
                         <button
                             type="submit"
-                            className="btn btn-primary btn-lg"
+                            className={`btn btn-lg ${
+                                isLoading ? 'btn-loading' : 'btn-primary'
+                            }`}
+                            disabled={isLoading}
                         >
-                            <i className="fa fa-user-plus mt-2"></i> Créer le
-                            compte
+                            {isLoading ? (
+                                <>
+                                    <span
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <span className="ms-2">
+                                        Création en cours...
+                                    </span>
+                                </>
+                            ) : (
+                                <>
+                                    <i className="fa fa-user-plus mt-2"></i>{' '}
+                                    Créer le compte
+                                </>
+                            )}
                         </button>
                     </div>
+
+                    {status.success && (
+                        <div className="alert alert-success">
+                            <p className="text-center">{status.message}</p>
+                            <Link to={'/login'}>
+                                <p className="text-center">
+                                    Se connecter maintenant.
+                                </p>
+                            </Link>
+                        </div>
+                    )}
                 </form>
             </div>
         </div>
