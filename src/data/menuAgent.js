@@ -17,7 +17,7 @@ export const menuAgent = [
     {
         title: 'Assistance IA',
         icon: 'fa fa-robot',
-        path: '/agent/assistance',
+        path: '/agent/assistance-ia',
     },
     {
         title: 'Mon profil',

@@ -11,6 +11,82 @@ function CommandesEnCours() {
     const [commandes, setCommandes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isValidating, setIsValidating] = useState(false);
+    const [validationMessage, setValidationMessage] = useState('');
+
+    const validerCommande = async () => {
+        if (commandes.length === 0) {
+            setValidationMessage('Aucun repas à commander');
+            return;
+        }
+
+        setIsValidating(true);
+        setValidationMessage('');
+        const token = localStorage.getItem('token');
+
+        try {
+            // Créer la commande
+            const responseCommande = await fetch(
+                'http://localhost/e-kaly/api/routes/commande/creer.php',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!responseCommande.ok) {
+                throw new Error('Erreur lors de la création de la commande');
+            }
+
+            const dataCommande = await responseCommande.json();
+            if (!dataCommande.success) {
+                throw new Error(dataCommande.message || 'Erreur inconnue');
+            }
+
+            // Ajouter chaque repas à la commande
+            for (const repas of commandes) {
+                const responseAjout = await fetch(
+                    'http://localhost/e-kaly/api/routes/commanderepas/ajouter.php',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({
+                            id_repas: repas.id_repas,
+                            id_commande: dataCommande.id_commande,
+                            quantite: repas.quantity,
+                        }),
+                    }
+                );
+
+                if (!responseAjout.ok) {
+                    throw new Error("Erreur lors de l'ajout d'un repas");
+                }
+
+                const dataAjout = await responseAjout.json();
+                if (!dataAjout.success) {
+                    throw new Error(dataAjout.message || 'Erreur inconnue');
+                }
+            }
+
+            // Si tout réussit
+            setValidationMessage('Commande validée avec succès!');
+            localStorage.removeItem('commandesEnCours');
+            setCommandes([]);
+            window.dispatchEvent(new Event('storage'));
+            window.dispatchEvent(new CustomEvent('commandUpdated'));
+        } catch (error) {
+            console.error('Erreur:', error);
+            setValidationMessage(`Erreur: ${error.message}`);
+        } finally {
+            setIsValidating(false);
+        }
+    };
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -103,6 +179,47 @@ function CommandesEnCours() {
 
             <div className="flex-grow-1 dashboard-content">
                 <Header title={'Commandes en cours'} />
+
+                <div className="total-section mt-4 p-3 bg-light rounded">
+                    <h4 className="text-end">
+                        Total: {calculateTotal().toLocaleString('fr-FR')} Ar
+                    </h4>
+
+                    {/* Bouton de validation */}
+                    <div className="d-flex justify-content-end mt-3">
+                        <button
+                            className="btn btn-success"
+                            onClick={validerCommande}
+                            disabled={isValidating || commandes.length === 0}
+                        >
+                            {isValidating ? (
+                                <>
+                                    <span
+                                        className="spinner-border spinner-border-sm me-2"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    Validation en cours...
+                                </>
+                            ) : (
+                                'Valider la commande'
+                            )}
+                        </button>
+                    </div>
+
+                    {/* Message de validation */}
+                    {validationMessage && (
+                        <div
+                            className={`alert ${
+                                validationMessage.includes('Erreur')
+                                    ? 'alert-danger'
+                                    : 'alert-success'
+                            } mt-3`}
+                        >
+                            {validationMessage}
+                        </div>
+                    )}
+                </div>
 
                 <div className="container-commandes">
                     {isLoading ? (

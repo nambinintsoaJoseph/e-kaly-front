@@ -10,6 +10,7 @@ import RepasDisponible from './pages/RepasDisponible';
 import CommandeRepasAgent from './pages/CommandeRepasAgent';
 import MonProfil from './pages/MonProfil';
 import CommandesEnCours from './pages/CommandesEnCours';
+import AssistantIA from './pages/AssistantIA';
 
 function App() {
     return (
@@ -30,6 +31,10 @@ function App() {
                     <Route
                         path="/agent/commendes-en-cours"
                         element={<CommandesEnCours />}
+                    />
+                    <Route
+                        path="/agent/assistance-ia"
+                        element={<AssistantIA />}
                     />
                 </Routes>
             </Router>
