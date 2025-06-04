@@ -4,40 +4,15 @@ import Header from '../../components/Header';
 import BarreRecherche from '../../components/BarreRecherche';
 import './commanderepasagent.css';
 import CommandeRepas from '../../components/CommandeRepas';
-
-// Test
-import painChoco from '../../assets/pain-choco.webp';
-import macaroniFromage from '../../assets/macaroni-fromage.jpg';
-
-// Données de test (simulant la réponse de l'API)
-const commandes = {
-    id_commande: 3,
-    date_commande: '27-05-2025 - 18:23:50',
-    gerant: 'Jean Pierre',
-    repas: [
-        {
-            id_repas: 21,
-            nom: 'Pain au chocolat',
-            description: 'Le pain au chocolat...',
-            photo: painChoco,
-            prix_unitaire: 3000,
-            quantite: 2,
-            sous_total: 6000,
-        },
-        {
-            id_repas: 22,
-            nom: 'Macaroni au fromage',
-            description: 'Le macaroni au fromage, familièrement...',
-            photo: macaroniFromage,
-            prix_unitaire: 10000,
-            quantite: 1,
-            sous_total: 10000,
-        },
-    ],
-    total: 16000,
-};
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const CommandeRepasAgent = () => {
+    const navigate = useNavigate();
+    const [commandes, setCommandes] = useState({});
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const menu = [
         {
             title: 'Repas disponibles',
@@ -53,6 +28,57 @@ const CommandeRepasAgent = () => {
         },
     ];
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        // Vérification du token
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const role = jwtDecode(token)['role'];
+            if (role !== 'agent') {
+                navigate('/login');
+                return;
+            }
+        } catch (error) {
+            console.error('Erreur de décodage du token:', error);
+            navigate('/login');
+            return;
+        }
+        getCommandes();
+    }, [navigate]);
+
+    const getCommandes = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(
+                'http://localhost/e-kaly/api/routes/commande/agent.php',
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des repas');
+            }
+
+            const data = await response.json();
+            setCommandes(data.commandes || []);
+        } catch (error) {
+            console.error('Erreur:', error);
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="d-flex flex-row">
             <Menu menu={menu} />
@@ -63,9 +89,26 @@ const CommandeRepasAgent = () => {
                 <BarreRecherche />
 
                 <div className="container-commande">
-                    <CommandeRepas commande={commandes} />
+                    {isLoading ? (
+                        <div
+                            className="d-flex justify-content-center"
+                            style={{ height: '120px' }}
+                        >
+                            <div class="spinner-border text-success"></div>
+                            <div className="ms-2">Chargement en cours...</div>
+                        </div>
+                    ) : error ? (
+                        <p className="error-message">Erreur: {error}</p>
+                    ) : commandes.length > 0 ? (
+                        commandes.map((cm, index) => (
+                            <CommandeRepas commande={cm} key={index} />
+                        ))
+                    ) : (
+                        <p>Aucune commande pour l'instant.</p>
+                    )}
                 </div>
             </div>
+            {console.log(commandes)}
         </div>
     );
 };

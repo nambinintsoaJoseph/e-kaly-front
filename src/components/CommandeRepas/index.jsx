@@ -24,7 +24,10 @@ function CommandeRepas({ commande }) {
                 {commande.repas.map((item) => (
                     <div key={item.id_repas} className="commande-repas d-flex">
                         <div>
-                            <img src={item.photo} className="img-repas" />
+                            <img
+                                src={`http://localhost/e-kaly${item.photo}`}
+                                className="img-repas"
+                            />
                         </div>
 
                         <div className="flex-grow-1 description-repas">
