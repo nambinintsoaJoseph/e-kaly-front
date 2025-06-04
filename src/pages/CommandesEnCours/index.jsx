@@ -67,6 +67,10 @@ function CommandesEnCours() {
             'commandesEnCours',
             JSON.stringify(updatedCommandes)
         );
+
+        // Déclencher la mise à jour du badge
+        window.dispatchEvent(new Event('storage'));
+        window.dispatchEvent(new CustomEvent('commandUpdated'));
     };
 
     const removeCommande = (id) => {
@@ -76,6 +80,10 @@ function CommandesEnCours() {
             'commandesEnCours',
             JSON.stringify(updatedCommandes)
         );
+
+        // Déclencher la mise à jour du badge
+        window.dispatchEvent(new Event('storage'));
+        window.dispatchEvent(new CustomEvent('commandUpdated'));
     };
 
     const calculateSubtotal = (prix, quantity) => {

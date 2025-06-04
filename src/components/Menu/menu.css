@@ -3,3 +3,16 @@
     height: 100vh;
     position: fixed;
 }
+
+.nav-item {
+    position: relative;
+    padding-right: 40px; /* Espace pour le badge */
+}
+
+.badge {
+    font-size: 0.75rem;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}

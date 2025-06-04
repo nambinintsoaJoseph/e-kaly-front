@@ -12,7 +12,6 @@ function Repas({ repas }) {
             );
 
             if (existeDejaIndex === -1) {
-                // Ajouter le nouveau repas avec quantité=1
                 const nouvellesCommandes = [
                     ...commandesExistantes,
                     { ...repas, quantity: 1 },
@@ -21,23 +20,27 @@ function Repas({ repas }) {
                     'commandesEnCours',
                     JSON.stringify(nouvellesCommandes)
                 );
-                alert('Repas ajouté à la commande!');
             } else {
-                // Si le repas existe déjà, augmenter la quantité
                 commandesExistantes[existeDejaIndex].quantity += 1;
                 localStorage.setItem(
                     'commandesEnCours',
                     JSON.stringify(commandesExistantes)
                 );
-                alert('Quantité augmentée pour ce repas!');
             }
+
+            // Déclencher à la fois l'événement storage et un événement personnalisé
+            window.dispatchEvent(new Event('storage'));
+            window.dispatchEvent(new CustomEvent('commandUpdated'));
+
+            alert('Repas ajouté à la commande!');
         } catch (error) {
             console.error("Erreur lors de l'ajout à la commande:", error);
             localStorage.setItem(
                 'commandesEnCours',
                 JSON.stringify([{ ...repas, quantity: 1 }])
             );
-            alert('Repas ajouté à une nouvelle commande!');
+            window.dispatchEvent(new Event('storage'));
+            window.dispatchEvent(new CustomEvent('commandUpdated'));
         }
     };
 
