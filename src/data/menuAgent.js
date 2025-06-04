@@ -5,9 +5,19 @@ export const menuAgent = [
         path: '/agent/repas',
     },
     {
+        title: 'Commandes en cours',
+        icon: 'fa fa-hourglass-half',
+        path: '/agent/commende-en-cours',
+    },
+    {
         title: 'Mes commandes',
         icon: 'fa fa-receipt',
         path: '/agent/commande',
+    },
+    {
+        title: 'Assistance IA',
+        icon: 'fa fa-robot',
+        path: '/agent/assistance',
     },
     {
         title: 'Mon profil',
