@@ -7,7 +7,7 @@ export const menuAgent = [
     {
         title: 'Commandes en cours',
         icon: 'fa fa-hourglass-half',
-        path: '/agent/commende-en-cours',
+        path: '/agent/commendes-en-cours',
     },
     {
         title: 'Mes commandes',

@@ -1,0 +1,24 @@
+.container-commandes {
+    padding: 20px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.total-section {
+    max-width: 300px;
+    margin-left: auto;
+}
+
+.btn-outline-secondary {
+    width: 30px;
+    text-align: center;
+    padding: 0.25rem 0.5rem;
+}

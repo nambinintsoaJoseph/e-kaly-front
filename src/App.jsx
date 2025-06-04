@@ -9,6 +9,7 @@ import Signup from './pages/Signup';
 import RepasDisponible from './pages/RepasDisponible';
 import CommandeRepasAgent from './pages/CommandeRepasAgent';
 import MonProfil from './pages/MonProfil';
+import CommandesEnCours from './pages/CommandesEnCours';
 
 function App() {
     return (
@@ -26,6 +27,10 @@ function App() {
                         element={<CommandeRepasAgent />}
                     />
                     <Route path="/agent/profil" element={<MonProfil />} />
+                    <Route
+                        path="/agent/commendes-en-cours"
+                        element={<CommandesEnCours />}
+                    />
                 </Routes>
             </Router>
         </>
