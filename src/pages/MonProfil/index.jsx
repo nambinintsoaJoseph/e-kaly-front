@@ -6,23 +6,9 @@ import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import Profil from '../../components/Profil';
 import './monprofil.css';
+import { menuAgent } from '../../data/menuAgent';
 
 function MonProfil() {
-    const menuItems = [
-        {
-            title: 'Repas disponibles',
-            icon: 'fa fa-utensils',
-        },
-        {
-            title: 'Mes commandes',
-            icon: 'fa fa-receipt',
-        },
-        {
-            title: 'Mon profil',
-            icon: 'fa fa-user',
-        },
-    ];
-
     const [profil, setProfil] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -49,7 +35,7 @@ function MonProfil() {
 
     return (
         <div className="d-flex flex-row">
-            <Menu menu={menuItems} />
+            <Menu menu={menuAgent} />
 
             <div className="flex-grow-1 dashboard-content">
                 <Header title={'Mon profil'} />

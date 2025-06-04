@@ -1,4 +1,5 @@
 import './menu.css';
+import { Link } from 'react-router-dom';
 
 function Menu({ menu }) {
     return (
@@ -11,10 +12,14 @@ function Menu({ menu }) {
                 <h5 className="pe-5 text-light text-center">Navigation</h5>
                 <ul className="nav flex-column text-light">
                     {menu.map((m, id) => (
-                        <li key={id} className="p-3">
+                        <Link
+                            to={m.path}
+                            key={id}
+                            className="p-3 text-light text-decoration-none"
+                        >
                             <i className={`${m.icon} me-2`}></i> {'  '}{' '}
                             {m.title}
-                        </li>
+                        </Link>
                     ))}
                 </ul>
             </div>

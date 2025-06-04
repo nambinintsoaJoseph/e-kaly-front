@@ -6,27 +6,13 @@ import './repasdisponible.css';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { useState, useEffect } from 'react';
+import { menuAgent } from '../../data/menuAgent';
 
 function RepasDisponible() {
     const navigate = useNavigate();
     const [listeRepas, setListeRepas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    const menu = [
-        {
-            title: 'Repas disponibles',
-            icon: 'fa fa-utensils',
-        },
-        {
-            title: 'Mes commandes',
-            icon: 'fa fa-receipt',
-        },
-        {
-            title: 'Mon profil',
-            icon: 'fa fa-user',
-        },
-    ];
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -83,7 +69,7 @@ function RepasDisponible() {
 
     return (
         <div className="d-flex flex-row">
-            <Menu menu={menu} />
+            <Menu menu={menuAgent} />
 
             {/* Dashboard content */}
             <div className="flex-grow-1 dashboard-content">

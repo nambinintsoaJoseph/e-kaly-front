@@ -7,26 +7,13 @@ import CommandeRepas from '../../components/CommandeRepas';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { menuAgent } from '../../data/menuAgent';
 
 const CommandeRepasAgent = () => {
     const navigate = useNavigate();
     const [commandes, setCommandes] = useState({});
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const menu = [
-        {
-            title: 'Repas disponibles',
-            icon: 'fa fa-utensils',
-        },
-        {
-            title: 'Mes commandes',
-            icon: 'fa fa-receipt',
-        },
-        {
-            title: 'Mon profil',
-            icon: 'fa fa-user',
-        },
-    ];
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -81,7 +68,7 @@ const CommandeRepasAgent = () => {
 
     return (
         <div className="d-flex flex-row">
-            <Menu menu={menu} />
+            <Menu menu={menuAgent} />
 
             <div className="flex-grow-1 dashboard-content">
                 <Header title={'Mes commandes'} />
