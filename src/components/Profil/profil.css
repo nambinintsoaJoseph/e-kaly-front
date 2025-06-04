@@ -1,0 +1,45 @@
+.component-container-profil {
+    margin: 10px 80px 10px 80px;
+    padding: 20px;
+    border: 2px solid #e1e8f0;
+    border-radius: 10px;
+}
+
+.badge-role {
+    background-color: #dbebff;
+    width: 120px;
+    border-radius: 15px;
+    color: #1e40ba;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #fa7516;
+    border-radius: 50%;
+    color: white;
+    font-size: 3em;
+    padding-top: 13px;
+}
+
+.info {
+    background-color: #f9fafb;
+    margin-top: 10px;
+}
+
+.body-profil {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.body-profil > p {
+    font-size: 18px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.profil-icon {
+    position: relative;
+    top: 3px;
+}

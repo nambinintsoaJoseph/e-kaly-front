@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import RepasDisponible from './pages/RepasDisponible';
 import CommandeRepasAgent from './pages/CommandeRepasAgent';
+import MonProfil from './pages/MonProfil';
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                         path="/agent/commande"
                         element={<CommandeRepasAgent />}
                     />
+                    <Route path="/agent/profil" element={<MonProfil />} />
                 </Routes>
             </Router>
         </>
